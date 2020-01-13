@@ -1,0 +1,18 @@
+version: '3.0'
+services:
+  app:
+    build: .
+    command: bundle exec puma -C /app/config/puma.rb
+    working_dir: /app/
+    environment:
+      - RACK_ENV
+      - VIRTUAL_HOST
+    expose:
+      - 3000
+
+  web:
+    image: jwilder/nginx-proxy:alpine
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - 80:80
