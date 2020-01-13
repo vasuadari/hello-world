@@ -12,4 +12,8 @@ class App < Sinatra::Base
   get '/hello-world' do
     'hello world!'
   end
+
+  not_found do
+    'Page not found.'
+  end
 end
