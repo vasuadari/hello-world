@@ -9,6 +9,10 @@ class App < Sinatra::Base
     enable :logging
   end
 
+  get '/healthcheck' do
+    'ok'
+  end
+
   get '/hello-world' do
     'hello world!'
   end

@@ -1,6 +1,6 @@
 FROM ruby:2.6.4-alpine as builder
 
-RUN apk add build-base gcc libstdc++ openssl
+RUN apk add --update build-base gcc libstdc++ openssl
 
 WORKDIR /app
 
@@ -15,6 +15,8 @@ ADD . /app
 RUN bundle install --path ./vendor
 
 FROM ruby:2.6.4-alpine
+
+RUN apk add --update curl
 
 WORKDIR /app
 
