@@ -1,9 +1,8 @@
 #! /bin/bash
 
-export PORT=4000
 export RACK_ENV=$RACK_ENV
 
-APP_NAME="hello-world"
+APP_NAME=${APP_NAME:-hello-world}
 CONTAINER_NAME=${APP_NAME}_app_
 # lets find the first container
 FIRST_NUM=`docker ps | awk '{print $NF}' | grep $CONTAINER_NAME | awk -F  "_" '{print $NF}' | sort | head -1`
