@@ -1,6 +1,6 @@
 #! /bin/bash
 
-export RACK_ENV=$RACK_ENV
+export MIX_ENV=$MIX_ENV
 
 APP_NAME=${APP_NAME:-hello-world}
 CONTAINER_NAME=${APP_NAME}_app_
