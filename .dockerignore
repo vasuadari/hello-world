@@ -12,3 +12,4 @@ test/
 .travis.yml
 Dockerfile
 README.md
+scripts/
