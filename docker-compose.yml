@@ -1,16 +1,14 @@
 version: '3.4'
 services:
   app:
-    build: .
-    command: bundle exec puma -C /app/config/puma.rb
-    working_dir: /app/
+    image: vasuadari/hello-world:elixir
     environment:
-      - RACK_ENV
+      - MIX_ENV
       - VIRTUAL_HOST
     expose:
-      - 3000
+      - 4000
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/healthcheck"]
+      test: ["CMD", "curl", "-f", "http://localhost:4000/healthcheck"]
       interval: 45s
       timeout: 10s
       retries: 3
