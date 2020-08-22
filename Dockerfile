@@ -1,29 +1,29 @@
-FROM ruby:2.6.4-alpine as builder
+FROM bitwalker/alpine-elixir:latest AS builder
 
-RUN apk add --update build-base gcc libstdc++ openssl
+ARG MIX_ENV=$MIX_ENV
 
-WORKDIR /app
+WORKDIR /opt/release
 
-ADD Gemfile /app/Gemfile
+COPY . ./
 
-ADD Gemfile.lock /app/Gemfile.lock
+RUN mix deps.get
 
-RUN bundle install --path ./vendor
+RUN mix release
 
-ADD . /app
+FROM alpine:latest AS app
 
-RUN bundle install --path ./vendor
+ARG MIX_ENV=$MIX_ENV
 
-FROM ruby:2.6.4-alpine
+RUN apk --update add openssl ncurses-libs
 
-RUN apk add --update curl
+RUN adduser -h /opt/app -D app
 
-WORKDIR /app
+WORKDIR /opt/app
 
-COPY --from=builder /app/ /app/
+COPY --from=builder /opt/release/_build/$MIX_ENV/rel/hello_world ./
 
-RUN bundle install --path ./vendor
+RUN chown -R app: /opt/app
 
-EXPOSE 3000
+EXPOSE 4000
 
-CMD ["bundle exec", "puma", "-C /app/config/puma.rb"]
+CMD ["./bin/hello_world", "start"]
