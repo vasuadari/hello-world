@@ -1,18 +1,13 @@
 # HelloWorld
 
-To start your Phoenix server:
+A sample phoenix hello world application.
 
-  * Install dependencies with `mix deps.get`
-  * Start Phoenix endpoint with `mix phx.server`
+## Setup Instructions
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+1. Install docker via [brew](https://brew.sh/) or from [here](https://hub.docker.com/?overlay=onboarding)
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+2. Install docker-compose if not installed already
 
-## Learn more
+3. Run `VIRTUAL_HOST=localhost docker-compose up -d`
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+4. Open `http://localhost/hello-world` or run `curl -I localhost/hello-world`
