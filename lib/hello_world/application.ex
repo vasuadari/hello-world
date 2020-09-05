@@ -29,4 +29,8 @@ defmodule HelloWorld.Application do
     HelloWorldWeb.Endpoint.config_change(changed, removed)
     :ok
   end
+
+  def stop(_) do
+    IO.inspect "#{__MODULE__}.stop"
+  end
 end
