@@ -14,16 +14,18 @@ FROM alpine:latest AS app
 
 ARG MIX_ENV=$MIX_ENV
 
-RUN apk --update add openssl ncurses-libs
+RUN apk --update --no-cache add openssl ncurses-libs
 
 RUN adduser -h /opt/app -D app
 
+COPY --from=builder /opt/release/_build/$MIX_ENV/rel/hello_world /opt/app
+
+COPY entrypoint.sh /bin/entrypoint.sh
+
 WORKDIR /opt/app
 
-COPY --from=builder /opt/release/_build/$MIX_ENV/rel/hello_world ./
-
-RUN chown -R app: /opt/app
-
 EXPOSE 4000
+
+ENTRYPOINT ["entrypoint.sh"]
 
 CMD ["./bin/hello_world", "start"]
