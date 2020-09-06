@@ -10,7 +10,8 @@ defmodule HelloWorld.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      releases: releases()
     ]
   end
 
@@ -55,6 +56,14 @@ defmodule HelloWorld.MixProject do
   defp aliases do
     [
       setup: ["deps.get"]
+    ]
+  end
+
+  defp releases do
+    [
+      hello_world: [
+        include_executables_for: [:unix],
+      ]
     ]
   end
 end

@@ -1,5 +1,7 @@
 FROM bitwalker/alpine-elixir:latest AS builder
 
+RUN elixir -v
+
 ARG MIX_ENV=$MIX_ENV
 
 WORKDIR /opt/release
@@ -8,7 +10,7 @@ COPY . ./
 
 RUN mix deps.get
 
-RUN mix release
+RUN mix release --quiet
 
 FROM alpine:latest AS app
 
@@ -18,11 +20,11 @@ RUN apk --update --no-cache add openssl ncurses-libs tini
 
 RUN adduser -h /opt/app -D app
 
-COPY --from=builder /opt/release/_build/$MIX_ENV/rel/hello_world /opt/app
+WORKDIR /opt/app
+
+COPY --from=builder /opt/release/_build/$MIX_ENV/rel/hello_world ./
 
 COPY entrypoint.sh /entrypoint.sh
-
-WORKDIR /opt/app
 
 EXPOSE 4000
 
