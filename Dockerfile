@@ -12,6 +12,10 @@ RUN mix deps.get
 
 RUN mix release --quiet
 
+RUN adduser -h /opt/app -D app
+
+RUN chown -R app: _build/
+
 FROM alpine:latest AS app
 
 ARG MIX_ENV=$MIX_ENV
@@ -19,6 +23,8 @@ ARG MIX_ENV=$MIX_ENV
 RUN apk --update --no-cache add openssl ncurses-libs tini
 
 RUN adduser -h /opt/app -D app
+
+USER app
 
 WORKDIR /opt/app
 
