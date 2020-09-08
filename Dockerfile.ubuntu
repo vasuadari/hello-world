@@ -1,0 +1,41 @@
+FROM elixir:1.10.4-slim AS builder
+
+RUN elixir -v
+
+ARG MIX_ENV=$MIX_ENV
+
+WORKDIR /opt/release
+
+COPY . ./
+
+RUN mix local.hex --force
+
+RUN mix local.rebar --force
+
+RUN mix deps.get
+
+RUN mix release --quiet
+
+FROM ubuntu:latest AS app
+
+ARG MIX_ENV=$MIX_ENV
+
+RUN apt-get update \
+      && apt-get install -y --no-install-recommends libssl-dev \
+              libncurses-dev \
+              tini \
+      && rm -rf /var/lib/apt/lists/*
+
+RUN adduser --disabled-password --gecos "" --home /opt/app app
+
+WORKDIR /opt/app
+
+COPY --from=builder /opt/release/_build/$MIX_ENV/rel/hello_world ./
+
+COPY entrypoint.sh /entrypoint.sh
+
+EXPOSE 4000
+
+ENTRYPOINT ["/usr/bin/tini", "--", "/entrypoint.sh"]
+
+CMD ["./bin/hello_world", "start"]

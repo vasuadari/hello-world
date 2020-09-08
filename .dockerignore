@@ -11,5 +11,6 @@ test/
 .gitignore
 .travis.yml
 Dockerfile
+Dockerfile.ubuntu
 README.md
 scripts/
