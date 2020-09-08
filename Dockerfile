@@ -13,7 +13,7 @@ WORKDIR /opt/release
 COPY . ./
 
 # Run dependencies
-RUN mix deps.get
+RUN mix deps.get --only $MIX_ENV
 
 # Create a release with quiet to skip writing progress
 RUN mix release --quiet
