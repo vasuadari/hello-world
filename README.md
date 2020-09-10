@@ -2,6 +2,10 @@
 
 A sample sinatra hello world application.
 
+# Other Languages
+
+[Hello World](https://github.com/vasuadari/hello-world/tree/elixir) in elixir
+
 # Instructions
 
 1. Install docker via [brew](https://brew.sh/) or from [here](https://hub.docker.com/?overlay=onboarding)
